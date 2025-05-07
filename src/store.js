@@ -1,32 +1,45 @@
 export const initialStore=()=>{
-  return{
-    message: null,
-    todos: [
-      {
-        id: 1,
-        title: "Make the bed",
-        background: null,
-      },
-      {
-        id: 2,
-        title: "Do my homework",
-        background: null,
-      }
-    ]
-  }
+		return{
+			pageSize: 48,
+			pages: [],
+			count: 0,
+			pokemons: [],
+			favs: []
+		}
 }
 
 export default function storeReducer(store, action = {}) {
-  switch(action.type){
-    case 'add_task':
-
-      const { id,  color } = action.payload
-
-      return {
-        ...store,
-        todos: store.todos.map((todo) => (todo.id === id ? { ...todo, background: color } : todo))
-      };
-    default:
-      throw Error('Unknown action.');
-  }    
+	let aux_favs = []
+	switch(action.type){
+		case 'loadAllPokemon':
+			return {
+				...store,
+				count: action.payload.count,
+				pokemons: action.payload.results,
+				pages: [...Array(Math.ceil(action.payload.count/store.pageSize)).keys()]
+			}
+		case 'load_favs':
+			return {
+				...store, favs: JSON.parse(localStorage.getItem("favs"))
+			}
+		case 'add_fav':
+			aux_favs = [...store.favs, parseInt(action.payload) ]
+			localStorage.setItem("favs", JSON.stringify(aux_favs))
+			return {
+				...store, favs: aux_favs
+			}
+		case 'remove_fav':
+			aux_favs = [...store.favs]
+			let index = aux_favs.indexOf(parseInt(action.payload))
+			console.log({favs: aux_favs, id: action.payload, index: index})
+			if (index !== -1) {
+				aux_favs.splice(index, 1)
+			}
+			localStorage.setItem("favs", JSON.stringify(aux_favs))
+			return {
+				...store, favs: aux_favs
+			}
+		default:
+			throw Error('Unknown action.');
+	}    
 }

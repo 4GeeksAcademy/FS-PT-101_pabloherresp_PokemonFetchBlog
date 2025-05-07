@@ -1,0 +1,19 @@
+body{
+    background-color: rgba(211, 211, 211, 0.432);
+}
+
+.PokeCardImage{
+    height: auto;
+    width: 300wv;
+}
+
+.PokeViewImage{
+    height: auto;
+    width: 10wv;
+}
+
+.DropdownSearch{
+    max-height: 300px;
+    scrollbar-width: thin;
+    overflow: auto;
+}
