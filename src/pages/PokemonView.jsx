@@ -26,15 +26,19 @@ export const PokemonView = () => {
 	},[id])
 
 	useEffect(()=>{
-		if(store.favs.includes(parseInt(pokemon.id)))
-			setFav(true)
-
 		let foundDesc = pokemon.species?.flavor_text_entries.find((item)=>item.language.name == "en")
 		let foundShort = pokemon.species?.genera.find((item)=>item.language.name == "en")
 		let gen = pokemon.species?.generation.name.slice(11)
 
 		setPokeData({...pokeData, desc: foundDesc?.flavor_text, short: foundShort?.genus, gen: gen})
 	},[pokemon])
+
+	useEffect(()=>{
+		if(store.favs.includes(parseInt(pokemon.id)))
+			setFav(true)
+		else
+			setFav(false)
+	},[store.favs])
 
 	const getPokemon = async () => {
 		const data = await PokeAPIService.getAllPokemon()

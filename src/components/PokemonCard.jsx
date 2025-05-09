@@ -10,7 +10,9 @@ export const PokemonCard = (props) => {
 	useEffect(()=>{
 		if(store.favs.includes(parseInt(props.pid)))
 			setFav(true)
-	},[])
+		else
+			setFav(false)
+	},[store.favs])
 
 	const handleClickFav = (e) => {
 		if(!isFav)

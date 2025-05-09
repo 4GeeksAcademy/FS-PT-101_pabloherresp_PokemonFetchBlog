@@ -31,7 +31,6 @@ export default function storeReducer(store, action = {}) {
 		case 'remove_fav':
 			aux_favs = [...store.favs]
 			let index = aux_favs.indexOf(parseInt(action.payload))
-			console.log({favs: aux_favs, id: action.payload, index: index})
 			if (index !== -1) {
 				aux_favs.splice(index, 1)
 			}
